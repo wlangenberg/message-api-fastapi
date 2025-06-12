@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from typing import List, Optional
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from exceptions import MessageNotFoundError, RecipientNotFoundError
 from models import (
@@ -108,7 +108,7 @@ async def fetch_messages(
         raise HTTPException(status_code=500, detail="Failed to fetch messages")
 
 
-@router.post("/messages", response_model=MessageResponse, tags=["Messages"])
+@router.post("/messages", response_model=MessageResponse, status_code=status.HTTP_201_CREATED, tags=["Messages"])
 async def send_message(
     message_data: MessageCreate, storage: MessageStore = Depends(get_storage)
 ):
@@ -127,7 +127,7 @@ async def send_message(
         raise HTTPException(status_code=500, detail="Failed to create message")
 
 
-@router.delete("/messages", response_model=DeleteResponse, tags=["Messages"])
+@router.delete("/messages", response_model=DeleteResponse, status_code=status.HTTP_200_OK, tags=["Messages"])
 async def delete_multiple_messages(
     message_ids: Optional[List[UUID]] = Query(None),
     storage: MessageStore = Depends(get_storage),

@@ -42,7 +42,7 @@ class TestSendMessage:
         response = client.post("/messages", json=message_data)
 
         # Assert
-        assert response.status_code == 200
+        assert response.status_code == 201
         data = response.json()
         assert data["recipient"] == message_data["recipient"]
         assert data["content"] == message_data["content"]
@@ -60,7 +60,7 @@ class TestSendMessage:
         response = client.post("/messages", json=message_data)
 
         # Assert
-        assert response.status_code == 200
+        assert response.status_code == 201
         data = response.json()
         assert data["recipient"] == message_data["recipient"]
         assert data["content"] == message_data["content"]
@@ -417,7 +417,7 @@ class TestIntegrationScenarios:
 
         # Act & Assert
         response = client.post("/messages", json=message_data)
-        assert response.status_code == 200
+        assert response.status_code == 201
         message_id = response.json()["id"]
 
         response = client.get("/messages/new/Willie")
