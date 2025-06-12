@@ -68,8 +68,10 @@ If you do not have `make` installed:
 # Install dependencies
 pip install -r requirements.txt
 
-# Run the service
+# Run the service in dev mode
 uvicorn main:app --host 0.0.0.0 --port 8080 --reload
+
+# NOTE: The service is not production ready so I have not spent any time researching how to best serve the app in prod mode.
 ```
 
 This will start the API and bind it to all network interfaces on port 8000.
@@ -182,40 +184,7 @@ curl 'http://localhost:8080/messages?start=0&limit=10'
 }
 ```
 
-### 4. Fetch Messages with Pagination
-
-```bash
-curl 'http://localhost:8080/messages/user@example.com?start=0&limit=10'
-```
-**Response:**
-```json
-{
-  "messages": [
-    {
-      "id": "a5316885-81d1-4c52-8bb5-1168acfd0fa9",
-      "recipient": "user@example.com",
-      "content": "Hello worlds!",
-      "sender": "Elisabeth",
-      "timestamp": "2025-06-12T20:29:01.846987Z",
-      "status": "read"
-    },
-    {
-      "id": "b15f3413-2a45-4d54-8aac-1f2c62a26074",
-      "recipient": "user@example.com",
-      "content": "Hello there!",
-      "sender": "Sam",
-      "timestamp": "2025-06-12T20:28:00.624706Z",
-      "status": "unread"
-    }
-  ],
-  "total": 2,
-  "start": 0,
-  "limit": 10,
-  "recipient": "user@example.com"
-}
-```
-
-### 5. Delete a Message
+### 4. Delete a Message
 
 ```bash
 curl -X DELETE http://localhost:8080/messages/3fec4cc2-6c99-4444-bb5c-bc75a0a4e0ea
@@ -232,7 +201,7 @@ curl -X DELETE http://localhost:8080/messages/3fec4cc2-6c99-4444-bb5c-bc75a0a4e0
 }
 ```
 
-### 6. Delete Multiple Messages
+### 5. Delete Multiple Messages
 
 ```bash
 curl -X DELETE \
@@ -249,27 +218,6 @@ curl -X DELETE \
     "31bf5b87-7dc7-4b3b-8290-1bf640232d8b"
   ],
   "timestamp": "2025-06-12T20:23:22.644287Z"
-}
-```
-
-### 7. Get Statistics
-
-```bash
-curl http://localhost:8080/stats
-```
-
-**Response:**
-```json
-{
-  "total_messages": 42,
-  "total_recipients": 10,
-  "total_read": 35,
-  "total_unread": 7,
-  "messages_per_recipient": {
-    "user@example.com": 5,
-    "admin@example.com": 3
-  },
-  "timestamp": "2025-06-11T10:00:00Z"
 }
 ```
 
