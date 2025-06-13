@@ -79,6 +79,12 @@ This will start the API and bind it to all network interfaces on port 8000.
 - Accessible locally at: http://localhost:8080
 - API documentation: http://localhost:8080/docs
 
+You could also run some tests using:  
+```bash
+make test
+#or
+pytest test_message_service.py -v
+```
 
 ## API Endpoints
 
@@ -131,7 +137,7 @@ curl -X POST http://localhost:8080/messages \
 ### 2. Fetch New Messages
 
 ```bash
-curl http://localhost:8080/messages/new/user@example.com
+curl 'http://localhost:8080/messages/new/user@example.com'
 ```
 
 **Response:**
@@ -187,7 +193,7 @@ curl 'http://localhost:8080/messages?start=0&limit=10'
 ### 4. Delete a Message
 
 ```bash
-curl -X DELETE http://localhost:8080/messages/3fec4cc2-6c99-4444-bb5c-bc75a0a4e0ea
+curl -X DELETE 'http://localhost:8080/messages/3fec4cc2-6c99-4444-bb5c-bc75a0a4e0ea'
 ```
 
 **Response:**

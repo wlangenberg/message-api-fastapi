@@ -438,7 +438,7 @@ class TestIntegrationScenarios:
         for i, r in enumerate(recipients):
             for _ in range(i + 1):
                 client.post(
-                    "/messages", json={"recipient": r, "content": "Importan Message"}
+                    "/messages", json={"recipient": r, "content": "Important Message"}
                 )
 
         # Act & Assert
@@ -465,14 +465,13 @@ class TestIntegrationScenarios:
         # Act & Assert
         response = client.get("/messages?start=0&limit=200")
         data = response.json()
+
+        # order should be the "descending by timestamp", so reveresed from the order we sent
         original_recipients = [str(i) for i in range(amount_of_messages)]
         original_recipients.reverse()
         message_recipients = list(
             map(lambda x: x.get("recipient"), data.get("messages"))
         )
-
-        print(original_recipients)
-        print(message_recipients)
 
         assert original_recipients == message_recipients
 
